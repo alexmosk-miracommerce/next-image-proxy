@@ -19,7 +19,13 @@ export function withImageProxy(passedOptions?: DeepPartial<Options>) {
   const options: Options = merge(defaultOptions, passedOptions)
 
   return async function (req: NextApiRequest, res: NextApiResponse) {
-    const imageUrl = req.query.imageUrl
+    const url = new URL(req.query.imageUrl as string);
+
+    Object.keys(req.query).map((key) =>
+      url.searchParams.append(key, req.query[key] as string),
+    );
+
+    const imageUrl = url.href;
 
     if (!imageUrl || (imageUrl && Array.isArray(imageUrl))) {
       res.status(400).send({ message: options.messages.wrongFormat })
