@@ -14,7 +14,6 @@
   ],
   "scripts": {
     "prepare": "npm run build",
-    "prebuild": "rimraf lib",
     "build": "microbundle",
     "build:watch": "microbundle watch"
   },
